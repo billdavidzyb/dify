@@ -437,6 +437,7 @@ services:
     networks:
       - ssrf_proxy_network
       - default
+      - dokploy-network
 
   # worker service
   # The Celery worker for processing the queue.
@@ -462,6 +463,7 @@ services:
     networks:
       - ssrf_proxy_network
       - default
+      - dokploy-network
 
   # Frontend web application.
   web:
@@ -541,6 +543,7 @@ services:
       test: [ 'CMD', 'curl', '-f', 'http://localhost:8194/health' ]
     networks:
       - ssrf_proxy_network
+      - dokploy-network
 
   # plugin daemon
   plugin_daemon:
@@ -586,6 +589,7 @@ services:
     networks:
       - ssrf_proxy_network
       - default
+      - dokploy-network
 
   # Certbot service
   # use `docker-compose --profile certbot up` to start the certbot service.
@@ -826,6 +830,7 @@ services:
       retries: 3
     networks:
       - milvus
+      - dokploy-network
 
   minio:
     container_name: milvus-minio
@@ -845,6 +850,7 @@ services:
       retries: 3
     networks:
       - milvus
+      - dokploy-network
 
   milvus-standalone:
     container_name: milvus-standalone
@@ -872,6 +878,7 @@ services:
       - 9091:9091
     networks:
       - milvus
+      - dokploy-network
 
   # Opensearch vector database
   opensearch:
@@ -895,6 +902,7 @@ services:
       - ./volumes/opensearch/data:/usr/share/opensearch/data
     networks:
       - opensearch-net
+      - dokploy-network
 
   opensearch-dashboards:
     container_name: opensearch-dashboards
@@ -907,6 +915,7 @@ services:
       - ./volumes/opensearch/opensearch_dashboards.yml:/usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
     networks:
       - opensearch-net
+      - dokploy-network
     depends_on:
       - opensearch
 
@@ -1008,6 +1017,8 @@ networks:
   opensearch-net:
     driver: bridge
     internal: true
+  dokploy-network:
+    external: true
 
 volumes:
   oradata:
